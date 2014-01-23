@@ -5,9 +5,17 @@ import (
     "math/cmplx"
 )
 func Cbrt(x complex128) complex128 {
-    return x
+    var z, e = complex128(1.0), complex128(0.0)
+    for {
+        z = z - (z*z*z-x) / (3*z*z)
+        if cmplx.Abs(z - e) < 1.0e-16 {
+            break
+        }
+        e = z
+    }
+    return z
 }
 func main() {
-    //fmt.Println(Cbrt(2))
-    fmt.Printf("%f\n", cmplx.Pow(2, 3))
+    fmt.Println(cmplx.Pow(2, 1.0 / 3.0))
+    fmt.Println(Cbrt(2))
 }
